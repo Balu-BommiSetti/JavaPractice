@@ -79,6 +79,18 @@ public class BinaryTree {
         bt.add(9);
         return bt;
     }
+    public static void printNodeAtKDis(Node curr,int k){
+        if(curr==null){
+            return;
+        }
+        if (k == 0) {
+            System.out.print(curr.key + "\t");
+        }
+        else{
+            printNodeAtKDis(curr.left,k-1);
+            printNodeAtKDis(curr.right,k-1);
+        }
+    }
     public static void main(String[] args){
         createBinaryTree();
         inOrder(root);
@@ -87,12 +99,26 @@ public class BinaryTree {
         System.out.println("PreOrder:");
         preOrder(root);
         BinaryTree binaryTree = new BinaryTree();
-        binaryTree.delete(6);
+//        binaryTree.delete(6);
         System.out.println("PreOrder:");
         preOrder(root);
         System.out.println("Level Order Traversal:");
         printLevelOrder(root);
+        System.out.println("Height of the tree is :");
+        System.out.println(heightOfTree(root));
+        System.out.println("Nodes at distance 0");
+        printNodeAtKDis(root,0);
+        System.out.println("Level Order Traversal:");
+        printLevelOrderNaiveApproach(root);
 
+    }
+    public static int heightOfTree(Node current){
+        if(current==null){
+            return 0;
+        }
+        else{
+            return Math.max(heightOfTree(current.left),heightOfTree(current.right))+1;
+        }
     }
     public static  void inOrder(Node root){
         if(root!=null){
@@ -115,6 +141,8 @@ public class BinaryTree {
             System.out.print(root.key+"\t");
         }
     }
+
+    //This Method uses the concept of Queue.. for print Level Order Traversal
     public static void printLevelOrder(Node root){
         if(root==null){
             return;
@@ -130,6 +158,12 @@ public class BinaryTree {
             if(curr.right != null){
                 q.add(curr.right);
             }
+        }
+    }
+    public static void printLevelOrderNaiveApproach(Node curr){
+        int height = heightOfTree(curr);
+        for(int i=0 ; i<height ; i++){
+            printNodeAtKDis(curr,i);
         }
     }
 }
