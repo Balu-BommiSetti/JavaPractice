@@ -149,8 +149,16 @@ public class BinaryTree {
         }
         Queue<Node> q = new LinkedList<Node>();
         q.add(root);
-        while(!q.isEmpty()){
+        q.add(null);
+        //!q.isEmpty() is for when we didn't want to print Nodes at same level in difference line
+        //because we are adding null into queue the queue will contains atlest one values(null) even if all the nodes were traversed...
+        while(q.size()>1/*!q.isEmpty()*/){
             Node curr = q.poll();
+            if(curr==null){
+                System.out.println();
+                q.add(null);
+                continue;
+            }
             System.out.print(curr.key+"\t");
             if(curr.left != null){
                 q.add(curr.left);
@@ -164,6 +172,7 @@ public class BinaryTree {
         int height = heightOfTree(curr);
         for(int i=0 ; i<height ; i++){
             printNodeAtKDis(curr,i);
+            System.out.println();
         }
     }
 }
